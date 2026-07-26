@@ -161,6 +161,29 @@
     text-align:center;
     margin:0 0 6px;
   }
+  .map-wrap{
+    margin:0 auto;
+    max-width:420px;
+  }
+  .map-frame{
+    width:100%;
+    height:280px;
+    border:1px solid var(--line);
+    display:block;
+  }
+  .map-link{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--olive);
+    text-decoration:none;
+    border-bottom:1px solid var(--olive);
+    padding-bottom:2px;
+  }
+  .map-link:hover{opacity:0.7;}
   .rsvp-sub{
     text-align:center;
     font-style:italic;
@@ -322,7 +345,7 @@
       <p class="venue-addr">вул. Джерельна, 20, Львів</p>
 
       <p class="rsvp-line">Просимо підтвердити присутність<br>до 10 серпня</p>
-      <p class="note">З любов'ю запрошуємо вас розділити з нами один із найважливіших днів нашого життя.</p>
+      <p class="note">Будемо раді розділити цей особливий день разом із вами.</p>
 
       <hr class="sep">
 
@@ -337,6 +360,19 @@
           <p class="sch-title">Святкова вечеря</p>
           <p class="sch-addr">Ресторан «Селям» · вул. Джерельна, 20</p>
         </div>
+      </div>
+
+      <hr class="sep">
+
+      <div class="map-wrap">
+        <iframe
+          class="map-frame"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=%D0%A0%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD+%D0%A1%D0%B5%D0%BB%D1%8F%D0%BC,+%D0%B2%D1%83%D0%BB.+%D0%94%D0%B6%D0%B5%D1%80%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0,+20,+%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&z=16&output=embed"
+          title="Карта — ресторан Селям">
+        </iframe>
+        <a class="map-link" href="https://maps.google.com/?cid=7955637276068235390" target="_blank" rel="noopener">Прокласти маршрут</a>
       </div>
 
       <hr class="sep">
@@ -366,7 +402,7 @@
         </div>
 
         <div class="field guests-row" id="notesRow">
-          <label class="field-label" for="notes">Уподобання щодо їжі / коментар</label>
+          <label class="field-label" for="notes">Харчові обмеження / коментар</label>
           <textarea id="notes" placeholder="Наприклад: вегетаріанець, алергія на горіхи, без глютену..."></textarea>
         </div>
 
