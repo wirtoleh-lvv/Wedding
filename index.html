@@ -268,6 +268,26 @@
     color:var(--ink-soft);
     margin:0;
   }
+  .music-btn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--paper-soft);
+    color:var(--olive);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    transition:all 0.15s ease;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  }
+  .music-btn:hover{background:var(--olive);color:var(--paper);}
+  .music-btn svg{width:22px;height:22px;}
 </style>
 </head>
 <body>
@@ -420,6 +440,63 @@
       alert('Не вдалося надіслати відповідь. Спробуйте, будь ласка, ще раз.');
     }
   });
+})();
+</script>
+
+<button class="music-btn" id="musicBtn" aria-label="Музика">
+  <svg id="iconPlay" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  <svg id="iconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+</button>
+<div id="ytPlayer" style="position:fixed;width:1px;height:1px;left:-9999px;top:-9999px;"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+(function(){
+  var VIDEO_ID = "T4S2nW5joxc";
+  var player = null;
+  var ready = false;
+  var isPlaying = false;
+  var btn = document.getElementById('musicBtn');
+  var iconPlay = document.getElementById('iconPlay');
+  var iconPause = document.getElementById('iconPause');
+
+  window.onYouTubeIframeAPIReady = function(){
+    player = new YT.Player('ytPlayer', {
+      videoId: VIDEO_ID,
+      playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: VIDEO_ID },
+      events: {
+        onReady: function(){ ready = true; },
+        onStateChange: function(e){
+          if(e.data === YT.PlayerState.PLAYING){ setPlaying(true); }
+          else if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED){ setPlaying(false); }
+        }
+      }
+    });
+  };
+
+  function setPlaying(v){
+    isPlaying = v;
+    iconPlay.style.display = v ? 'none' : 'block';
+    iconPause.style.display = v ? 'block' : 'none';
+  }
+
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(!ready || !player) return;
+    if(isPlaying){ player.pauseVideo(); }
+    else { player.playVideo(); }
+  });
+
+  var autoStarted = false;
+  function tryAutoStart(){
+    if(autoStarted) return;
+    autoStarted = true;
+    if(ready && player){ player.playVideo(); }
+    document.removeEventListener('click', tryAutoStart);
+    document.removeEventListener('touchstart', tryAutoStart);
+  }
+  document.addEventListener('click', tryAutoStart);
+  document.addEventListener('touchstart', tryAutoStart);
 })();
 </script>
 
