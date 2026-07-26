@@ -268,6 +268,20 @@
     color:var(--ink-soft);
     margin:0;
   }
+  .edit-btn{
+    margin-top:22px;
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--olive);
+    background:none;
+    border:none;
+    border-bottom:1px solid var(--olive);
+    padding:4px 2px;
+    cursor:pointer;
+  }
+  .edit-btn:hover{opacity:0.7;}
   .music-btn{
     position:fixed;
     bottom:20px;
@@ -363,6 +377,7 @@
         <p class="icon">Дякуємо</p>
         <h3 id="thankyouName">Дякуємо!</h3>
         <p id="thankyouText">Вашу відповідь отримано.</p>
+        <button type="button" class="edit-btn" id="editBtn">Змінити відповідь</button>
       </div>
     </div>
   </div>
@@ -432,13 +447,21 @@
       document.getElementById('thankyou').style.display = 'block';
       document.getElementById('thankyouName').textContent = attendValue === 'yes' ? 'Дякуємо, ' + name + '!' : 'Шкода, що не вийде, ' + name;
       document.getElementById('thankyouText').textContent = attendValue === 'yes'
-        ? 'Ми з нетерпінням чекаємо на зустріч із вами.'
+        ? 'Ми з нетерпінням чекаємо на зустріч із вами. Вашу відповідь збережено.'
         : 'Дякуємо, що дали знати. Будемо сумувати за вами в цей день.';
     } catch(err){
       submitBtn.disabled = false;
       submitBtn.textContent = 'Надіслати відповідь';
       alert('Не вдалося надіслати відповідь. Спробуйте, будь ласка, ще раз.');
     }
+  });
+
+  document.getElementById('editBtn').addEventListener('click', function(){
+    document.getElementById('thankyou').style.display = 'none';
+    document.getElementById('rsvpForm').style.display = 'block';
+    var submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Надіслати оновлену відповідь';
   });
 })();
 </script>
