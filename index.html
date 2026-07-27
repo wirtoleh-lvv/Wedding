@@ -153,6 +153,30 @@
     color:var(--ink-soft);
     margin:0;
   }
+  .sch-note{
+    font-style:italic;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:4px 0 0;
+  }
+  .dresscode{
+    max-width:400px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .dc-label{
+    font-family:'Cormorant Garamond',serif;
+    font-size:20px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    margin:0 0 8px;
+  }
+  .dc-text{
+    font-size:15px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    margin:0;
+  }
   .rsvp-heading{
     font-family:'Cormorant Garamond',serif;
     font-size:26px;
@@ -354,12 +378,20 @@
           <p class="sch-time">15:00</p>
           <p class="sch-title">Урочиста реєстрація</p>
           <p class="sch-addr">Центральний РАЦС · вул. І. Франка, 157</p>
+          <p class="sch-note">за бажанням — будемо раді бачити вас на церемонії</p>
         </div>
         <div class="sch-item">
-          <p class="sch-time">19:00</p>
+          <p class="sch-time">19:00 – 23:00</p>
           <p class="sch-title">Святкова вечеря</p>
           <p class="sch-addr">Ресторан «Селям» · вул. Джерельна, 20</p>
         </div>
+      </div>
+
+      <hr class="sep">
+
+      <div class="dresscode">
+        <p class="dc-label">Дрес-код</p>
+        <p class="dc-text">Святковий у природних, приглушених тонах — оливкові, бежеві, землисті відтінки.</p>
       </div>
 
       <hr class="sep">
@@ -383,7 +415,7 @@
       <form id="rsvpForm">
         <div class="field">
           <label class="field-label" for="guestName">Ваше ім'я та прізвище</label>
-          <input type="text" id="guestName" placeholder="Наприклад, Марія Коваль" autocomplete="name">
+          <input type="text" id="guestName" placeholder="Наприклад, Вірт Любомир" autocomplete="name">
           <p class="error-msg" id="nameError">Вкажіть, будь ласка, ім'я.</p>
         </div>
 
@@ -445,6 +477,24 @@
 
   btnYes.addEventListener('click', function(){ setAttend('yes'); });
   btnNo.addEventListener('click', function(){ setAttend('no'); });
+
+  var guestCountInput = document.getElementById('guestCount');
+  var notesInput = document.getElementById('notes');
+  function updateNotesPlaceholder(){
+    var count = parseInt(guestCountInput.value, 10);
+    if(isNaN(count) || count < 1){ count = 1; }
+    var restrictions = 'вегетаріанець, алергія на горіхи, без глютену...';
+    if(count <= 1){
+      notesInput.placeholder = 'Наприклад: Гість 1 — ' + restrictions;
+    } else {
+      var parts = [];
+      for(var i = 1; i <= Math.min(count, 4); i++){
+        parts.push('Гість ' + i + ' — ...');
+      }
+      notesInput.placeholder = 'Наприклад: Гість 1 — ' + restrictions + '\nГість 2 — ...';
+    }
+  }
+  guestCountInput.addEventListener('input', updateNotesPlaceholder);
 
   document.getElementById('rsvpForm').addEventListener('submit', async function(e){
     e.preventDefault();
